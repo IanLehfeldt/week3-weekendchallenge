@@ -1,0 +1,10 @@
+#toDoInput {
+    width: 50%;
+    font-size: 2em;
+}
+
+#inputButton{
+    font-size: 2em;
+    padding: 5px;
+    border-radius: 15px;
+}
