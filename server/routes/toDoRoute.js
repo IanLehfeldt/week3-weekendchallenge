@@ -24,7 +24,7 @@ router.get('/', function (req, res) {
 });
 
 router.post('/', function (req, res) {
-    console.log('message router was hit');
+    console.log('To do router was hit');
     pool.connect(function (errorConnectingToDatabase, client, done) {
         if (errorConnectingToDatabase) {
             //when connecting to DB failed!
@@ -42,6 +42,26 @@ router.post('/', function (req, res) {
                         res.sendStatus(200);
                     }
                 });
+        }
+    });
+});
+
+router.put('/:id', function (req, res){
+    console.log('To Do put method was hit!');
+    pool.connect( function (errorConnectingToDatabase, client, done){
+        if (errorConnectingToDatabase){
+            console.log('Error connecting to database', errorConnectingToDatabase);
+            res.sendStatus(500);
+        } else {
+            client.query('UPDATE todolist SET completed = \'Y\' WHERE id = $1;', [req.params.id], function (errorMakingQuery, result){
+                done();
+                if (errorMakingQuery){
+                    console.log('Error making query', errorMakingQuery);
+                    res.sendStatus(500);
+                } else {
+                    res.sendStatus(200);
+                }
+            });
         }
     });
 });
