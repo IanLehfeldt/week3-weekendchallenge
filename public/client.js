@@ -2,15 +2,33 @@ $(document).ready(function () {
     console.log('jQuery is sourced, dawg');
     getToDoList();
 
-    $('#toDoList').on('click', '#toDoCheckbox', function(){
+    $('#toDoList').on('click', '.deleteToDo', function () {
+        console.log('Delete button was clicked');
+        var toDoId = $(this).parent().data().id;
+        
+        if (confirm("Are you sure?")) {
+            $.ajax({
+                method: 'DELETE',
+                url: '/toDoRoute/' + toDoId,
+                success: function (response) {
+                    console.log(response);
+                    getToDoList();
+                }
+            });
+        }
+
+    });
+
+
+    $('#toDoList').on('click', '.toDoCheckbox', function () {
         console.log('Checkbox was clicked');
         var toDoId = $(this).parent().data().id;
         console.log(toDoId);
-        
+
         $.ajax({
             method: 'PUT',
             url: '/toDoRoute/' + toDoId,
-            success: function (response){
+            success: function (response) {
                 console.log(response);
                 getToDoList();
             }
@@ -56,10 +74,10 @@ function drawToDoList(toDoListArray) {
 
         var listItem = toDoListArray[i];
 
-        var $toDoDelete = $('<button id="deleteToDo">Delete</button>');
-        var $toDoCheckbox = $('<input type="checkbox" id="toDoCheckbox">');
+        var $toDoDelete = $('<button class="deleteToDo">Delete</button>');
+        var $toDoCheckbox = $('<input type="checkbox" class="toDoCheckbox">');
 
-        if (listItem.completed == 'N'){
+        if (listItem.completed == 'N') {
             var $toDoDiv = $('<div class="needsToBeDone"></div>');
             $toDoDiv.data('id', listItem.id);
             $('#toDoList').prepend($toDoDiv, '<br>');
