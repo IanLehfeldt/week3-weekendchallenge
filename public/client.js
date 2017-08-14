@@ -5,8 +5,8 @@ $(document).ready(function () {
     $('#toDoList').on('click', '.deleteToDo', function () {
         console.log('Delete button was clicked');
         var toDoId = $(this).parent().data().id;
-        
-        if (confirm("Are you sure?")) {
+
+        if (confirm("Once you remove an item it can't return, are you sure?")) {
             $.ajax({
                 method: 'DELETE',
                 url: '/toDoRoute/' + toDoId,
