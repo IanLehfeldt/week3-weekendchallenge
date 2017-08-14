@@ -6,7 +6,7 @@ $(document).ready(function () {
         console.log('Delete button was clicked');
         var toDoId = $(this).parent().data().id;
 
-        if (confirm("Once you remove an item it can't return, are you sure?")) {
+        if (confirm("If you delete a Task, you can't find it again. Are you sure?")) {
             $.ajax({
                 method: 'DELETE',
                 url: '/toDoRoute/' + toDoId,
@@ -49,9 +49,10 @@ $(document).ready(function () {
             data: toDoObject,
             success: function (response) {
                 console.log(response);
+                $('#toDoInput').val('');
                 getToDoList();
             }
-        });//end of post ajax request
+        })//end of post ajax request
     });//end of inputbutton event
 
 
@@ -87,7 +88,7 @@ function drawToDoList(toDoListArray) {
             var $completedDiv = $('<div class="completed"></div>');
             $completedDiv.data('id', listItem.id);
             $('#toDoList').append($completedDiv, '<br>');
-            $completedDiv.append(listItem.toDoItem, '<br>', "Completed:", $toDoCheckbox, '<br>');
+            $completedDiv.append(listItem.toDoItem, '<br>');
             $completedDiv.append($toDoDelete);
         }
 
